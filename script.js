@@ -17,3 +17,13 @@ function createGrid(size = 16) {
 
 // Initialize grid when page loads
 createGrid();
+
+//Add event listener to "paint" squares
+
+const squares = document.querySelectorAll('.grid-square');
+squares.forEach(square => {
+    square.addEventListener('mouseenter', function(event) {
+        square.style.backgroundColor = 'black';
+    });
+});
+
