@@ -1,3 +1,6 @@
+// Add mouse state tracking
+let isDrawing = false;
+
 function createGrid(size = 16) {
     const container = document.querySelector('.container');
     container.innerHTML = ''; // Clear existing grid
@@ -10,18 +13,26 @@ function createGrid(size = 16) {
         square.classList.add('grid-square');
         square.style.width = squareSize;
         square.style.height = squareSize;
-        
-        // Add event listener directly during creation
-        square.addEventListener('mouseenter', handleHover);
+                square.addEventListener('mouseover', handleHover);
         
         container.appendChild(square);
     }
 }
 
-// Separate the hover handling logic
 function handleHover(event) {
-    event.target.style.backgroundColor = 'black';
+    if (isDrawing) {
+        event.target.style.backgroundColor = 'black';
+    }
 }
+
+// Add mouse state listeners to the container
+const container = document.querySelector('.container');
+container.addEventListener('mousedown', () => isDrawing = true);
+container.addEventListener('mouseup', () => isDrawing = false);
+container.addEventListener('mouseleave', () => isDrawing = false);
+
+// Prevent drag selection while drawing
+container.addEventListener('dragstart', (e) => e.preventDefault());
 
 // Initialize grid when page loads
 createGrid();
