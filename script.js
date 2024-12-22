@@ -1,11 +1,11 @@
-// Add mouse state tracking
 let isDrawing = false;
 let isRainbowMode = false;
-
-// Store container element to avoid repeated DOM queries
 const container = document.querySelector('.container');
 
+let currentGridSize = 16; // Track the current grid size
+
 function createGrid(size = 16) {
+    currentGridSize = size; // Update the current grid size
     container.innerHTML = ''; // Clear existing grid
 
     const squareSize = `${100 / size}%`;
@@ -51,9 +51,9 @@ container.addEventListener('dragstart', (e) => e.preventDefault());
 // Initialize grid when page loads
 createGrid();
 
-const resetButton = document.createElement('button');
-resetButton.textContent = 'Clear';
-resetButton.addEventListener('click', function () {
+const setSizeButton = document.createElement('button');
+setSizeButton.textContent = 'Set Size';
+setSizeButton.addEventListener('click', function () {
     let newSize = prompt('Enter the number of squares per side (max 100):');
     newSize = parseInt(newSize);
     if (newSize > 0 && newSize <= 100) {
@@ -63,12 +63,19 @@ resetButton.addEventListener('click', function () {
     }
 });
 
+const resetButton = document.createElement('button');
+resetButton.textContent = 'Clear';
+resetButton.addEventListener('click', function () {
+    createGrid(currentGridSize); 
+});
+
 const rainbowButton = document.createElement('button');
 rainbowButton.textContent = 'Rainbow Mode: OFF';
 rainbowButton.addEventListener('click', function () {
-    isRainbowMode = !isRainbowMode; // Toggle rainbow mode
+    isRainbowMode = !isRainbowMode; 
     rainbowButton.textContent = isRainbowMode ? 'Rainbow Mode: ON' : 'Rainbow Mode: OFF';
 });
 
+document.querySelector('.controls').appendChild(setSizeButton);
 document.querySelector('.controls').appendChild(resetButton);
 document.querySelector('.controls').appendChild(rainbowButton);
