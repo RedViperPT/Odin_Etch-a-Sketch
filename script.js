@@ -1,35 +1,42 @@
 // Add mouse state tracking
 let isDrawing = false;
 
+// Store container element to avoid repeated DOM queries
+const container = document.querySelector('.container');
+
 function createGrid(size = 16) {
-    const container = document.querySelector('.container');
     container.innerHTML = ''; // Clear existing grid
 
     const squareSize = `${100 / size}%`;
 
-    // Create grid squares and attach listeners 
+    // Create grid squares
     for (let i = 0; i < size * size; i++) {
         const square = document.createElement('div');
         square.classList.add('grid-square');
         square.style.width = squareSize;
         square.style.height = squareSize;
-                square.addEventListener('mouseover', handleHover);
-        
         container.appendChild(square);
     }
 }
 
-function handleHover(event) {
-    if (isDrawing) {
+// Handle drawing state and color change
+function handleDrawing(event) {
+    if (event.type === 'mousedown') {
+        isDrawing = true;
+    } else if (event.type === 'mouseup' || event.type === 'mouseleave') {
+        isDrawing = false;
+    }
+
+    if (isDrawing && event.target.classList.contains('grid-square')) {
         event.target.style.backgroundColor = 'black';
     }
 }
 
-// Add mouse state listeners to the container
-const container = document.querySelector('.container');
-container.addEventListener('mousedown', () => isDrawing = true);
-container.addEventListener('mouseup', () => isDrawing = false);
-container.addEventListener('mouseleave', () => isDrawing = false);
+// Add event listeners for drawing
+container.addEventListener('mousedown', handleDrawing);
+container.addEventListener('mouseup', handleDrawing);
+container.addEventListener('mouseleave', handleDrawing);
+container.addEventListener('mouseover', handleDrawing);
 
 // Prevent drag selection while drawing
 container.addEventListener('dragstart', (e) => e.preventDefault());
@@ -39,7 +46,7 @@ createGrid();
 
 const resetButton = document.createElement('button');
 resetButton.textContent = 'Clear';
-resetButton.addEventListener('click', function() {
+resetButton.addEventListener('click', function () {
     let newSize = prompt('Enter the number of squares per side (max 100):');
     newSize = parseInt(newSize);
     if (newSize > 0 && newSize <= 100) {
