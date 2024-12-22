@@ -53,9 +53,13 @@ createGrid();
 
 const setSizeButton = document.createElement('button');
 setSizeButton.textContent = 'Set Size';
+
 setSizeButton.addEventListener('click', function () {
     let newSize = prompt('Enter the number of squares per side (max 100):');
     newSize = parseInt(newSize);
+    if (isNaN(newSize)) { 
+        return;
+    }
     if (newSize > 0 && newSize <= 100) {
         createGrid(newSize);
     } else {
