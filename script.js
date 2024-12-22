@@ -1,5 +1,6 @@
 // Add mouse state tracking
 let isDrawing = false;
+let isRainbowMode = false;
 
 // Store container element to avoid repeated DOM queries
 const container = document.querySelector('.container');
@@ -28,7 +29,13 @@ function handleDrawing(event) {
     }
 
     if (isDrawing && event.target.classList.contains('grid-square')) {
-        event.target.style.backgroundColor = 'black';
+        if (isRainbowMode) {
+            const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            event.target.style.backgroundColor = randomColor;
+        } else {
+            event.target.style.backgroundColor = 'black';
+        }
     }
 }
 
@@ -56,4 +63,12 @@ resetButton.addEventListener('click', function () {
     }
 });
 
-document.body.appendChild(resetButton);
+const rainbowButton = document.createElement('button');
+rainbowButton.textContent = 'Rainbow Mode: OFF';
+rainbowButton.addEventListener('click', function () {
+    isRainbowMode = !isRainbowMode; // Toggle rainbow mode
+    rainbowButton.textContent = isRainbowMode ? 'Rainbow Mode: ON' : 'Rainbow Mode: OFF';
+});
+
+document.querySelector('.controls').appendChild(resetButton);
+document.querySelector('.controls').appendChild(rainbowButton);
