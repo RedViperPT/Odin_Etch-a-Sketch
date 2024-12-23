@@ -1,5 +1,6 @@
 let isDrawing = false;
 let isRainbowMode = false;
+let isDarkeningMode = false;
 const container = document.querySelector('.container');
 
 let currentGridSize = 16; // Track the current grid size
@@ -16,6 +17,7 @@ function createGrid(size = 16) {
         square.classList.add('grid-square');
         square.style.width = squareSize;
         square.style.height = squareSize;
+        square.dataset.interactions = '0';
         container.appendChild(square);
     }
 }
@@ -29,12 +31,23 @@ function handleDrawing(event) {
     }
 
     if (isDrawing && event.target.classList.contains('grid-square')) {
-        if (isRainbowMode) {
+        if (isDarkeningMode) {
+            const currentInteractions = parseInt(event.target.dataset.interactions) || 0;
+            if (currentInteractions < 10) {
+                const newInteractions = currentInteractions + 1;
+                const opacity = newInteractions * 0.1;
+                event.target.style.backgroundColor = 'black';
+                event.target.style.opacity = opacity;
+                event.target.dataset.interactions = newInteractions;
+            }
+        } else if (isRainbowMode) {
             const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
             event.target.style.backgroundColor = randomColor;
+            event.target.style.opacity = 1;
         } else {
             event.target.style.backgroundColor = 'black';
+            event.target.style.opacity = 1;
         }
     }
 }
@@ -80,6 +93,16 @@ rainbowButton.addEventListener('click', function () {
     rainbowButton.textContent = isRainbowMode ? 'Rainbow Mode: ON' : 'Rainbow Mode: OFF';
 });
 
+const darkeningButton = document.createElement('button');
+darkeningButton.textContent = 'Darkening Mode: OFF';
+darkeningButton.addEventListener('click', function () {
+    isDarkeningMode = !isDarkeningMode;
+    isRainbowMode = false; // Turn off rainbow mode when darkening mode is enabled
+    rainbowButton.textContent = 'Rainbow Mode: OFF';
+    darkeningButton.textContent = isDarkeningMode ? 'Darkening Mode: ON' : 'Darkening Mode: OFF';
+});
+
 document.querySelector('.controls').appendChild(setSizeButton);
 document.querySelector('.controls').appendChild(resetButton);
 document.querySelector('.controls').appendChild(rainbowButton);
+document.querySelector('.controls').appendChild(darkeningButton);
