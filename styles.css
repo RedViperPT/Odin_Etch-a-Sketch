@@ -6,20 +6,20 @@ body {
     margin: 0;
     background-image: linear-gradient(to bottom right,
             hsl(0, 0%, 0%) 0%,
-            hsla(0, 0%, 0%, 0.993) 4%,
-            hsla(0, 0%, 0%, 0.974) 7.7%,
-            hsla(0, 0%, 0%, 0.945) 11.2%,
-            hsla(0, 0%, 0%, 0.905) 14.7%,
-            hsla(0, 0%, 0%, 0.859) 18.4%,
-            hsla(0, 0%, 0%, 0.805) 22.4%,
-            hsla(0, 0%, 0%, 0.747) 26.9%,
-            hsla(0, 0%, 0%, 0.686) 32%,
-            hsla(0, 0%, 0%, 0.623) 38%,
-            hsla(0, 0%, 0%, 0.559) 45%,
-            hsla(0, 0%, 0%, 0.497) 53%,
-            hsla(0, 0%, 0%, 0.437) 62.4%,
-            hsla(0, 0%, 0%, 0.382) 73.3%,
-            hsla(0, 0%, 0%, 0.332) 85.7%,
+            hsla(0, 0%, 0%, 0.99) 4%,
+            hsla(0, 0%, 0%, 0.97) 8%,
+            hsla(0, 0%, 0%, 0.94) 12%,
+            hsla(0, 0%, 0%, 0.90) 16%,
+            hsla(0, 0%, 0%, 0.86) 20%,
+            hsla(0, 0%, 0%, 0.80) 24%,
+            hsla(0, 0%, 0%, 0.75) 28%,
+            hsla(0, 0%, 0%, 0.69) 32%,
+            hsla(0, 0%, 0%, 0.62) 38%,
+            hsla(0, 0%, 0%, 0.56) 45%,
+            hsla(0, 0%, 0%, 0.50) 53%,
+            hsla(0, 0%, 0%, 0.44) 62%,
+            hsla(0, 0%, 0%, 0.38) 73%,
+            hsla(0, 0%, 0%, 0.33) 86%,
             hsla(0, 0%, 0%, 0.29) 100%);
     font-family: 'Arial', sans-serif;
 }
@@ -30,10 +30,10 @@ body {
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
-    min-width: 960px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
     background-color: #fff;
+    transition: all 0.3s ease;
 }
 
 .grid-square {
@@ -44,7 +44,7 @@ body {
 }
 
 .grid-square:hover {
-    transform: scale(1.02);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 .controls {
